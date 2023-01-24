@@ -38,7 +38,7 @@ class RepoToPost:
             if img_url:
                 f.write(f'  path: {img_url}\n')
             else:
-                f.write(f'  path: https://socialify.git.ci/{repository.fullname}/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&stargazers=1&theme=Light\n')
+                f.write(f'  path: https://socialify.git.ci/{repository.fullname}/image?&forks=1&issues=1&language=1&name=1&owner=1&stargazers=1&theme=Light\n')
 
             if alt_text:
                 f.write(f'  alt: {alt_text}\n')
