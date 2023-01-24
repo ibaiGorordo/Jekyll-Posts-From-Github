@@ -34,10 +34,17 @@ class RepoToPost:
             f.write(f'last_modified_at: {last_update_date}\n')
             f.write(f'url: {repository.url}\n')
 
+            f.write(f'image:\n')
             if img_url:
-                f.write(f'image:\n')
                 f.write(f'  path: {img_url}\n')
-                f.write(f'  alt: {alt_text}\n') if alt_text else None
+            else:
+                f.write(f'  path: https://socialify.git.ci/{repository.fullname}/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&stargazers=1&theme=Light\n')
+
+            if alt_text:
+                f.write(f'  alt: {alt_text}\n')
+            else:
+                f.write(f'  alt: {repository.name}\n')
+
             if repository.topics:
                 f.write(f'tags: [{", ".join(repository.topics)}]\n')
             f.write(f'categories: ["Repository", {repository.language}]\n')
@@ -86,6 +93,8 @@ class RepoToPost:
     def get_image_data(content) -> tuple:
         url = content.split('(')[1].split(')')[0]
         alt = content.split('[')[1].split(']')[0]
+        if '!' in alt:
+            alt = alt.split('!')[1]
         return url, alt
 
     @staticmethod

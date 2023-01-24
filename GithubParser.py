@@ -9,6 +9,7 @@ from github.Repository import Repository
 @dataclass
 class Repository:
     name: str
+    fullname: str
     creation_date: datetime
     last_update_date: datetime
     url: str
@@ -34,7 +35,7 @@ class GithubParser:
             repo = self.g.get_repo(repo_name.full_name)
             name = repo_name.name.replace('-', ' ')
             topics = repo.get_topics()
-            repository = Repository(name, repo.created_at, repo.updated_at, repo.html_url, topics, repo.language, repo)
+            repository = Repository(name, repo.full_name, repo.created_at, repo.updated_at, repo.html_url, topics, repo.language, repo)
             repos.append(repository)
         print("Finished parsing repositories!")
         return repos
@@ -44,7 +45,7 @@ class GithubParser:
 
 
 if __name__ == '__main__':
-    # TODO: Edit your token and username
+    # TODO.md: Edit your token and username
     access_token = None
     username = 'ibaiGorordo'
 
