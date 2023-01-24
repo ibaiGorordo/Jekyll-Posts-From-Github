@@ -49,6 +49,8 @@ class RepoToPost:
                 f.write(f'tags: [{", ".join(repository.topics)}]\n')
             f.write(f'categories: ["Repository", {repository.language}]\n')
             f.write('---\n')
+            f.write(f'\n## [Open In Github]({repository.url})')
+            f.write(f'[![Open In Github](https://icons-for-free.com/download-icon-part+1+github-1320568339880199515_0.svg)]({repository.url})\n\n')
             f.write(contents)
 
     @staticmethod
