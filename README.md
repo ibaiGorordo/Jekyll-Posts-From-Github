@@ -34,6 +34,8 @@ python main.py
     - url
     - creation_date
     - last_update_date
+    - topics
+    - programming language
     - PyGithub Repository object
 - It will then create a Jekyll post for each repository, using the README file as the content of the post.
 - The following information is added to the header of the post:
@@ -42,8 +44,8 @@ python main.py
     - last_modified_at
     - url
     - image (path and alt) for the first image in the README file
-    - tags (TODO)
-    - categories (TODO)
+    - tags (based on the repository's topics)
+    - categories (["repository", {programming language}])
 - To avoid having a duplicate title, it deletes the first line of the README file if it is a title (i.e. starts with "# ").
 - Because bare URLs are not properly converted to links by Jekyll, it will convert any bare URL to a link in Markdown.
 - Finally, it also fixes the image url for images in stored in Github repositories (i.e. it will add the raw url to the image).

@@ -12,6 +12,8 @@ class Repository:
     creation_date: datetime
     last_update_date: datetime
     url: str
+    topics: list
+    language: str
     repo: object
 
 
@@ -26,13 +28,15 @@ class GithubParser:
         repos = []
 
         repo_names = self.list_repositories(username)
-        print(f"Found {repo_names.totalCount} repositories for user {username}. Parsing...")
-        for repo_name in tqdm(repo_names):
+        repo_count = repo_names.totalCount
+        print(f"Found {repo_count} repositories for user {username}. Parsing...")
+        for repo_name in tqdm(repo_names, total=repo_count):
             repo = self.g.get_repo(repo_name.full_name)
             name = repo_name.name.replace('-', ' ')
-            repository = Repository(name, repo.created_at, repo.updated_at, repo.html_url, repo)
+            topics = repo.get_topics()
+            repository = Repository(name, repo.created_at, repo.updated_at, repo.html_url, topics, repo.language, repo)
             repos.append(repository)
-        print("\nFinished parsing repositories!")
+        print("Finished parsing repositories!")
         return repos
 
     def list_repositories(self, username) -> PaginatedList:

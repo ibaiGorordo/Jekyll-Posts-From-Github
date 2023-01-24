@@ -38,6 +38,9 @@ class RepoToPost:
                 f.write(f'image:\n')
                 f.write(f'  path: {img_url}\n')
                 f.write(f'  alt: {alt_text}\n') if alt_text else None
+            if repository.topics:
+                f.write(f'tags: [{", ".join(repository.topics)}]\n')
+            f.write(f'categories: ["Repository", {repository.language}]\n')
             f.write('---\n')
             f.write(contents)
 
