@@ -6,7 +6,7 @@ from GithubParser import GithubParser
 class RepoToPost:
 
     @staticmethod
-    def write_posts(repositories, post_dir_path="../../_posts"):
+    def write_posts(repositories, post_dir_path="_posts"):
         print("Writing posts...")
         for repository in tqdm(repositories):
             RepoToPost.write_post(repository, post_dir_path)
@@ -14,7 +14,10 @@ class RepoToPost:
 
     @staticmethod
     def write_post(repository, post_dir_path):
-        contents = repository.repo.get_contents("README.md").decoded_content.decode('utf-8')
+        try:
+            contents = repository.repo.get_contents("README.md").decoded_content.decode('utf-8')
+        except:
+            return
         contents = RepoToPost.remove_title(contents)
         contents = RepoToPost.fix_image_links(contents)
         contents = RepoToPost.fix_urls(contents)
@@ -49,8 +52,7 @@ class RepoToPost:
                 f.write(f'tags: [{", ".join(repository.topics)}]\n')
             f.write(f'categories: ["Repository", {repository.language}]\n')
             f.write('---\n')
-            f.write(f'\n## [Open In Github]({repository.url})')
-            f.write(f'[![Open In Github](https://icons-for-free.com/download-icon-part+1+github-1320568339880199515_0.svg)]({repository.url})\n\n')
+            f.write(f'\n## [Open In Github]({repository.url})\n\n')
             f.write(contents)
 
     @staticmethod
